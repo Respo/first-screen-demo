@@ -3,7 +3,7 @@
   (:require
     [respo.alias :refer [html head title script style meta' div link body]]
     [respo.render.html :refer [make-html make-string]]
-    [stack-workflow.comp.container :refer [comp-container]]))
+    [first-screen.comp.container :refer [comp-container]]))
 
 (defn use-text [x] {:attrs {:innerHTML x}})
 (defn html-dsl [data html-content ssr-stages]
@@ -24,7 +24,7 @@
         (script {:attrs {:src "main.js"}})))))
 
 (defn generate-html [ssr-stages]
-  (let [ tree (comp-container {} ssr-stages)
+  (let [ tree (comp-container {} ssr-stages false)
          html-content (make-string tree)]
     (html-dsl {:build? true} html-content ssr-stages)))
 

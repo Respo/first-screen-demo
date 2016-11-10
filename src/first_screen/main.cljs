@@ -16,7 +16,11 @@
 (defn render-app! []
   (let [target (.querySelector js/document "#app")]
     (println "store:" @store-ref)
-    (render! (comp-container @store-ref #{:dynamic :shell}) target dispatch! states-ref)))
+    (render!
+     (comp-container @store-ref #{:dynamic :shell} true)
+     target
+     dispatch!
+     states-ref)))
 
 (def ssr-stages
   (let [ssr-element (.querySelector js/document "#ssr-stages")
@@ -29,7 +33,7 @@
     (let [target (.querySelector js/document "#app")]
       (falsify-stage!
        target
-       (render-element (comp-container @store-ref ssr-stages) states-ref)
+       (render-element (comp-container @store-ref ssr-stages false) states-ref)
        dispatch!)))
   (js/setTimeout (fn [] (render-app!)) 1000)
   (add-watch store-ref :changes render-app!)
